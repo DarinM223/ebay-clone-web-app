@@ -14,5 +14,10 @@ public class ItemServlet extends HttpServlet implements Servlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         // your codes here
+        String query = request.getParameter("q");
+        String numResultsToSkip = request.getParameter("numResultsToSkip");
+        String numResultsToReturn = request.getParameter("numResultsToReturn");
+
+        
     }
 }
