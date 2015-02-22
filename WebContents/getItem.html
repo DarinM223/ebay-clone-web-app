@@ -1,16 +1,14 @@
 <html>
 	<head>
-		<title>Auction site search form</title>
+		<title>Auction site item description</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	</head>
 	<body>
 
-		<div class="container">
-			<div class="jumbotron">
-				<h1>Hello world!</h1>
-				<p>This is a form where you retrieve items from their id!</p>
-			</div>
-		</div>
+		<form action="item" method="GET">
+			<input type="text" name="id">
+			<input type="submit" value="Submit">
+		</form>
 		
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

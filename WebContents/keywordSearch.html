@@ -7,10 +7,26 @@
 
 		<div class="container">
 			<div class="jumbotron">
-				<h1>Hello world!</h1>
-				<p>This is a form where you enter your keyword search query!</p>
+				<h1>eBay clone search form:</h1>
+				<form action="search" method="GET" class="form-horizontal">
+					<fieldset>
+						<legend>Enter your search query here:</legend>
+						<div class="form-group">
+							<input type="text" class="form-control" name="q" id="q-input">
+						</div>
+							
+						<input type="hidden" name="numResultsToSkip" value="0">
+						<input type="hidden" name="numResultsToReturn" value="20">
+						<div class="form-group">
+							<input type="submit" value="Search!" class="btn btn-primary">
+						</div>
+					</fieldset>
+
+				</form>
 			</div>
+
 		</div>
+
 		
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
