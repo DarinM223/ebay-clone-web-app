@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.*;
+import java.net.URLEncoder;
 
 public class ProxyServlet extends HttpServlet implements Servlet {
        
@@ -21,7 +22,7 @@ public class ProxyServlet extends HttpServlet implements Servlet {
         // your codes here
         try {
         	String q = request.getParameter("q");
-        	URL url = new URL("http://google.com/complete/search?output=toolbar&q="+ q);
+        	URL url = new URL("http://google.com/complete/search?output=toolbar&q="+ URLEncoder.encode(q, "UTF-8"));
         	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         	InputStream is = conn.getInputStream();
         	InputStreamReader isr = new InputStreamReader(is);

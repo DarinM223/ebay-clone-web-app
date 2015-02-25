@@ -2,7 +2,7 @@
 
 /**
  * Represents a dropdown control that autocompletes based on a event function
- * @param {function(string) -> Promise(Array.<String>)} getData function call to retrieve dropdown data
+ * @param {function(string, callback)} getData function call to retrieve dropdown data
  * @constructor
  */
 function DropdownControl(textbox, getData) {
@@ -28,11 +28,15 @@ function DropdownControl(textbox, getData) {
 
     this.textbox.onkeyup = function() {
       // send ajax request to retrieve suggestions then set the dropdown to the suggestions
-      that.getData(that.textbox.value).then(function(suggestions) {
+      that.getData(that.textbox.value, function(err, suggestions) {
+        if (err) {
+          console.log(err);
+          that.setDropdownList(['test1', 'test2', 'test3']);
+          that.toggleDropdown(true);
+          return;
+        }
+
         that.setDropdownList(suggestions);
-        that.toggleDropdown(true);
-      }).catch(function(e) {
-        that.setDropdownList(['test1', 'test2', 'test3']);
         that.toggleDropdown(true);
       });
     };
