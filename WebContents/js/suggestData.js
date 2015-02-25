@@ -1,6 +1,6 @@
 'use strict';
 
-var getGoogleSuggestData = (function($, Promise) {
+var getGoogleSuggestData = (function() {
 
   /**
    * Parses google suggest xml and returns an array of suggestions
