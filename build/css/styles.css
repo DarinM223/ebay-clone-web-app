@@ -10,7 +10,7 @@ div.suggestions div {
 	padding: 0px 3px;
 }
 
-div suggestions div.current {
+div.suggestions div.current {
 	background-color: #3366cc;
 	color: white;
 }

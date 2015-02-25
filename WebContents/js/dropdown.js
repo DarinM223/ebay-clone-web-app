@@ -1,26 +1,19 @@
 'use strict';
 
 /**
- * Represents a dropdown control that uses Google suggest for autocompletion
+ * Represents a dropdown control that autocompletes based on a event function
+ * @param {function(string) -> Promise(Array.<String>)} getData function call to retrieve dropdown data
  * @constructor
  */
-function DropdownControl(textbox) {
+function DropdownControl(textbox, getData) {
   this.layer = null; // dropdown box DOM element
   this.textbox = textbox; // text box DOM element
+  this.getData = getData;
   this._init();
   this.highlightedNodeIndex = -1;
 }
 
-(function($, document) {
-
-  /**
-   * Parses google suggest xml and returns an array of suggestions
-   * @param {string} xml the xml to parse
-   * @return {Array.<string>} array of string suggestions
-   */
-  function parseXML(xml) {
-    // TODO: implement this
-  }
+(function(document) {
 
   DropdownControl.prototype._initDropdown = function() {
     this.layer = document.createElement('div');
@@ -35,20 +28,11 @@ function DropdownControl(textbox) {
 
     this.textbox.onkeyup = function() {
       // send ajax request to retrieve suggestions then set the dropdown to the suggestions
-      $.ajax({
-        type: 'GET',
-        url: '/suggest',
-        data: {
-          q: that.textbox.value
-        }
-      }).success(function(data) {
-        var suggestions = parseXML(data);
-
+      that.getData(that.textbox.value).then(function(suggestions) {
         that.setDropdownList(suggestions);
-        that.toggleDropdown(true); // enable dropdown
-      }).error(function() {
-        console.log('Error retrieving suggestion data from server!');
-        that.setDropdownList(['hello', 'world', 'foo']);
+        that.toggleDropdown(true);
+      }).catch(function(e) {
+        that.setDropdownList(['test1', 'test2', 'test3']);
         that.toggleDropdown(true);
       });
     };
@@ -113,12 +97,10 @@ function DropdownControl(textbox) {
 
     node.onclick = function() {
       if (that.highlightedNodeIndex !== -1) { // if there is already a highlighted item, remove the highlight
-        console.log('There is an already hightlighted node!');
         that.layer.childNodes[that.highlightedNodeIndex].className = '';
       }
 
       node.className = 'current';
-      console.log(index);
       that.highlightedNodeIndex = index; // set the highlighted node index the current node index
     };
 
@@ -138,7 +120,6 @@ function DropdownControl(textbox) {
     }
     // push new nodes
     for (var i = 0; i < suggestions.length; i++) {
-      console.log(suggestions[i]);
       this.createSuggestionNode(suggestions[i], i);
     }
 
@@ -146,7 +127,9 @@ function DropdownControl(textbox) {
     if (this.layer.firstChild) {
       this.layer.firstChild.className = 'current';
       this.highlightedNodeIndex = 0;
+    } else {
+      this.highlightedNodeIndex = -1;
     }
   };
 
-})(jQuery, document);
+})(document);
