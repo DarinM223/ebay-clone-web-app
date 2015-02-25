@@ -23,22 +23,67 @@ function DropdownControl(textbox, getData) {
     document.body.appendChild(this.layer);
   };
 
+  DropdownControl.prototype.moveHighlight = function(direction) {
+    if (this.highlightedNodeIndex !== -1) { // if there is an already selected highlight deselect it
+      this.layer.childNodes[this.highlightedNodeIndex].className = '';
+    } else {
+      return;
+    }
+
+    var newIndex = this.highlightedNodeIndex + direction;
+
+    if (newIndex < 0) 
+      newIndex = 0;
+    else if (newIndex >= this.layer.childNodes.length) 
+      newIndex = this.layer.childNodes.length - 1;
+
+    this.highlightedNodeIndex = newIndex;
+    this.layer.childNodes[this.highlightedNodeIndex].className = 'current';
+  };
+
+  DropdownControl.prototype.completeTextFromHighlight = function() {
+    if (this.highlightedNodeIndex === -1) return;
+
+    var completeText = this.layer.childNodes[this.highlightedNodeIndex].childNodes[0].nodeValue;
+    this.textbox.value = completeText;
+  };
+
   DropdownControl.prototype._initTextbox = function() {
     var that = this;
 
-    this.textbox.onkeyup = function() {
-      // send ajax request to retrieve suggestions then set the dropdown to the suggestions
-      that.getData(that.textbox.value, function(err, suggestions) {
-        if (err) {
-          console.log(err);
-          that.setDropdownList(['test1', 'test2', 'test3']);
-          that.toggleDropdown(true);
-          return;
-        }
+    this.textbox.onkeydown = function(e) {
+      if (!e) {
+        e = window.event;
+      }
 
-        that.setDropdownList(suggestions);
-        that.toggleDropdown(true);
-      });
+      switch (e.keyCode) {
+        case 13: // enter key
+          that.completeTextFromHighlight();
+          break;
+        case 38: // up key
+          that.moveHighlight(-1);
+          break;
+        case 40: // down key
+          that.moveHighlight(1);
+          break;
+      }
+    };
+
+    this.textbox.onkeyup = function(e) {
+      if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13) {
+        // send ajax request to retrieve suggestions then set the dropdown to the suggestions
+        that.getData(that.textbox.value, function(err, suggestions) {
+          if (err) {
+            console.log(err);
+            that.setDropdownList(['test1', 'test2', 'test3']);
+            that.toggleDropdown(true);
+            return;
+          }
+
+          that.setDropdownList(suggestions);
+          that.toggleDropdown(true);
+        });
+      }
     };
   };
 
