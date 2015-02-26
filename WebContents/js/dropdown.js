@@ -20,7 +20,7 @@ function DropdownControl(textbox, getData) {
     this.layer.className = 'suggestions';
     this.layer.style.visibility = 'hidden';
     this.layer.style.width = this.textbox.offsetWidth;
-    document.body.appendChild(this.layer);
+    this.textbox.parentNode.appendChild(this.layer);
   };
 
   DropdownControl.prototype.moveHighlight = function(direction) {
