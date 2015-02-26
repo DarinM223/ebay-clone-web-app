@@ -46,6 +46,7 @@ function DropdownControl(textbox, getData) {
 
     var completeText = this.layer.childNodes[this.highlightedNodeIndex].childNodes[0].nodeValue;
     this.textbox.value = completeText;
+    this.toggleDropdown(false);
   };
 
   DropdownControl.prototype._initTextbox = function() {
@@ -71,18 +72,22 @@ function DropdownControl(textbox, getData) {
 
     this.textbox.onkeyup = function(e) {
       if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13) {
-        // send ajax request to retrieve suggestions then set the dropdown to the suggestions
-        that.getData(that.textbox.value, function(err, suggestions) {
-          if (err) {
-            console.log(err);
-            that.setDropdownList(['test1', 'test2', 'test3']);
-            that.toggleDropdown(true);
-            return;
-          }
+        if (that.textbox.value.length === 0 || !that.textbox.value.trim()) {
+          that.toggleDropdown(false);
+        } else {
+          // send ajax request to retrieve suggestions then set the dropdown to the suggestions
+          that.getData(that.textbox.value, function(err, suggestions) {
+            if (err) {
+              console.log(err);
+              that.setDropdownList(['test1', 'test2', 'test3']);
+              that.toggleDropdown(true);
+              return;
+            }
 
-          that.setDropdownList(suggestions);
-          that.toggleDropdown(true);
-        });
+            that.setDropdownList(suggestions);
+            that.toggleDropdown(true);
+          });
+        }
       }
     };
   };
@@ -144,6 +149,15 @@ function DropdownControl(textbox, getData) {
 
     node.appendChild(textNode);
 
+    node.onmouseover = function() {
+      if (that.highlightedNodeIndex !== -1) { // if there is already a highlighted item, remove the highlight
+        that.layer.childNodes[that.highlightedNodeIndex].className = '';
+      }
+
+      node.className = 'current';
+      that.highlightedNodeIndex = index; // set the highlighted node index the current node index
+    };
+
     node.onclick = function() {
       if (that.highlightedNodeIndex !== -1) { // if there is already a highlighted item, remove the highlight
         that.layer.childNodes[that.highlightedNodeIndex].className = '';
@@ -151,6 +165,7 @@ function DropdownControl(textbox, getData) {
 
       node.className = 'current';
       that.highlightedNodeIndex = index; // set the highlighted node index the current node index
+      that.completeTextFromHighlight();
     };
 
     this.layer.appendChild(node);
