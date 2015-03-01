@@ -24,6 +24,8 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.ErrorHandler;
 
 public class ItemServlet extends HttpServlet implements Servlet {
+
+    public ItemServlet() {}
     
     //helper functions from MyParser.java
     static final String[] typeName = {
@@ -48,7 +50,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
     static ArrayList<Bid> bidList = new ArrayList<Bid>();
     // static ArrayList<Item> itemList = new ArrayList<Item>();
     // static ArrayList<ItemCategory> itemCategoryList = new ArrayList<ItemCategory>();
-    static ArrayList<String> categories = new ArrayList<String>();
+    static ArrayList<String> categoryList = new ArrayList<String>();
 
     //class which represents entry in Bidder.dat
     public static class Bidder {
@@ -105,6 +107,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
 
             return this.bd_time.compareTo(bid.bd_time);
         }
+    }
 
     //class which represents entry in Item.dat
     public static class Item {
@@ -260,8 +263,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
         return date;
     }
 
-    public ItemServlet() {}
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         // your codes here
@@ -305,7 +306,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
             Seller seller_obj = new Seller(s_userID, s_rating);
 
             //truncate description to 4000 characters if its longer than 4000
-            String description = escapeString(getElementTextByTagNameNR(e, "Description"));
+            String description = escapeString(getElementTextByTagNameNR(item, "Description"));
             if (description.length() > 4000) {
                 description = description.substring(0, 4000);
             }
@@ -341,7 +342,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
             for (Element c : categories) {
                 //get category and add to categories
                 String category = getElementText(c);
-                categories.add(category);
+                categoryList.add(category);
             }
 
             //create item object for request
@@ -353,14 +354,14 @@ public class ItemServlet extends HttpServlet implements Servlet {
             Collections.sort(bidList);
 
             //sort categories alphabetically before passing for display
-            Collections.sort(categories);
+            Collections.sort(categoryList);
 
             //set attributes for the 5 sections
             request.setAttribute("bidders", bidderMap);
             request.setAttribute("seller", seller_obj);
             request.setAttribute("bids", bidList);
             request.setAttribute("item", item_obj);
-            request.setAttribute("categories", categories);
+            request.setAttribute("categories", categoryList);
 
             //send to jsp page for display
             request.getRequestDispatcher("/getItem.jsp").forward(request, response);
