@@ -4,12 +4,20 @@
 	<head>
 		<title>Auction site search results</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
 	</head>
 	<body>
 		<div class="container">
 			<div class="jumbotron">
 				
 				<h1>Search results:</h1>
+
+				<form action="search" method="GET">
+					<input type="text" name="q" id="q-input">
+					<input type="hidden" name="numResultsToSkip" value="0">
+					<input type="hidden" name="numResultsToReturn" value="20">
+					<input type="submit" value="Search!" class="btn btn-primary">
+				</form>
 
 				<%
 					String query = (String) request.getAttribute("q");
@@ -44,10 +52,9 @@
 				<% 
 					if (results.length > 0) {
 				%>
-					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip + numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary" style="float: right;">Next</a>
+					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip + numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary" id="next">Next</a>
 				<%
 					}
-
 				%>
 
 
