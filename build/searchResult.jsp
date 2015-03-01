@@ -11,9 +11,16 @@
 				
 				<h1>Search results:</h1>
 
+				<%
+					String query = (String) request.getAttribute("q");
+					int numResultsToSkip = (Integer) request.getAttribute("numResultsToSkip");
+					int numResultsToReturn = (Integer) request.getAttribute("numResultsToReturn");
+					SearchResult[] results = (SearchResult[])request.getAttribute("results");
+				%>
+
 				<div class="list-group">
 					<%
-						SearchResult[] results = (SearchResult[])request.getAttribute("results");
+
 						for (int i = 0; i < results.length; i++) { 
 							SearchResult result = results[i];
 					%>
@@ -25,6 +32,25 @@
 						}
 					%>
 				</div>
+
+				<% 
+					if (numResultsToSkip - numResultsToReturn >= 0) {
+				%>
+					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip - numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary">Previous</a>
+				<%
+					}
+				%>
+
+				<% 
+					if (results.length > 0) {
+				%>
+					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip + numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary" style="float: right;">Next</a>
+				<%
+					}
+
+				%>
+
+
 			</div>
 		</div>
 
