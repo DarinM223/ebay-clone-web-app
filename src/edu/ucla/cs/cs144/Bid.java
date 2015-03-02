@@ -23,7 +23,6 @@ public class Bid implements Comparable<Bid>{
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             return format.parse(this.bd_time).compareTo(format.parse(bid.bd_time));
-
         }
         catch(ParseException e) {
             System.out.println("Parse error!");

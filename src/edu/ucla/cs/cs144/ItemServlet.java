@@ -71,7 +71,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
                                "in the supplied XML files.");
             System.exit(3);
         }
-        
     }
     
     /* Non-recursive (NR) version of Node.getElementsByTagName(...)
