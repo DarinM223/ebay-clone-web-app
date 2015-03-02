@@ -52,21 +52,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
     // static ArrayList<ItemCategory> itemCategoryList = new ArrayList<ItemCategory>();
     static ArrayList<String> categoryList = new ArrayList<String>();
 
-    //class which represents entry in Bidder.dat
-    public static class Bidder {
-        String b_userID;
-        String b_rating;
-        String b_location;
-        String b_country;
-
-        public Bidder(String userID, String rating, String location, String country) {
-            b_userID = userID;
-            b_rating = rating;
-            b_location = location;
-            b_country = country;
-        }
-    }
-
     //class which represents entry in Seller.dat
     public static class Seller {
         String s_userID;
@@ -106,44 +91,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
             }
 
             return this.bd_time.compareTo(bid.bd_time);
-        }
-    }
-
-    //class which represents entry in Item.dat
-    public static class Item {
-        String i_itemID;
-        String i_name;
-        String i_currently;
-        String i_buy_price;
-        String i_first_bid;
-        String i_number_of_bids;
-        String i_location;
-        String i_latitude;
-        String i_longitude;
-        String i_country;
-        String i_started;
-        String i_ends;
-        String i_seller;
-        String i_description;
-
-        public Item(String itemID, String name, String currently, String buy_price,
-                            String first_bid, String number_of_bids, String location, String latitude,
-                            String longitude, String country, String started, String ends,
-                            String seller, String description) {
-            i_itemID = itemID;
-            i_name = name;
-            i_currently = currently;
-            i_buy_price = buy_price;
-            i_first_bid = first_bid;
-            i_number_of_bids = number_of_bids;
-            i_location = location;
-            i_latitude = latitude;
-            i_longitude = longitude;
-            i_country = country;
-            i_started = started;
-            i_ends = ends;
-            i_seller = seller;
-            i_description = description;
         }
     }
 

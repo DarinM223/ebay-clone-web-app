@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@ page import="edu.ucla.cs.cs144.Item" %>
+<%@ page import="java.util.*" %>
+<% Item item = (Item) request.getAttribute("item"); %>
 <html>
 	<head>
 		<title>Item Information</title>
@@ -8,7 +11,7 @@
 		<div class="container">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Item ID:</h3>
+					<h3 class="panel-title">Item ID: <%= item.i_itemID %> </h3>
   				</div>
 			</div>
 		</div>
