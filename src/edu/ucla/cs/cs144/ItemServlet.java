@@ -52,48 +52,6 @@ public class ItemServlet extends HttpServlet implements Servlet {
     // static ArrayList<ItemCategory> itemCategoryList = new ArrayList<ItemCategory>();
     static ArrayList<String> categoryList = new ArrayList<String>();
 
-    //class which represents entry in Seller.dat
-    public static class Seller {
-        String s_userID;
-        String s_rating;
-
-        public Seller(String userID, String rating) {
-            s_userID = userID;
-            s_rating = rating;
-        }
-    }
-
-    //class which represents entry in Bid.dat
-    public static class Bid implements Comparable<Bid>{
-        String bd_itemID;
-        String bd_userID;
-        String bd_time;
-        String bd_amount;
-
-        public Bid(String itemID, String userID, String time, String amount) {
-            bd_itemID = itemID;
-            bd_userID = userID;
-            bd_time = time;
-            bd_amount = amount;
-        }
-
-        //override compareTo
-        public int compareTo(Bid bid) {
-            try {
-                //convert to Date and compare
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-                return format.parse(this.bd_time).compareTo(format.parse(bid.bd_time));
-
-            }
-            catch(ParseException e) {
-                System.out.println("Parse error!");
-            }
-
-            return this.bd_time.compareTo(bid.bd_time);
-        }
-    }
-
     static class MyErrorHandler implements ErrorHandler {
         
         public void warning(SAXParseException exception)

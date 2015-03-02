@@ -35,8 +35,4 @@ public class Item {
         i_seller = seller;
         i_description = description;
     }
-
-    public String getItemID() {
-        return i_itemID;
-    }
 }
