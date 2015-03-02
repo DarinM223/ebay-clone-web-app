@@ -364,7 +364,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
             request.setAttribute("categories", categoryList);
 
             //send to jsp page for display
-            request.getRequestDispatcher("/getItem.jsp").forward(request, response);
+            request.getRequestDispatcher("/itemResult.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e);
         }
