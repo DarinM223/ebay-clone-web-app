@@ -23,7 +23,11 @@
 			<%
 				if (!itemFound) {
 			%>
-				<h3 class="panel-title">No Item Found</h3>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">No Item Found</h3>
+					</div>
+				</div>
 			<%
 				} else {
 			%>
@@ -137,9 +141,6 @@
 			<%
 				}
 			%>
-			<%
-				}
-			%>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Seller Location</h3>
@@ -171,7 +172,10 @@
 					%>
 				</ul>
 			</div>	
-		</div>	
+			<%
+				}
+			%>
+		</div>
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<!-- Bootstrap -->
