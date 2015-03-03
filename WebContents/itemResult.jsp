@@ -17,8 +17,30 @@
 	<head>
 		<title>Item Information</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+		<style type="text/css"> 
+			html { height: 100% } 
+			body { height: 100%; margin: 0px; padding: 0px } 
+			#map_canvas { height: 100% }
+		</style>
+		<script type="text/javascript"
+			src="http://maps.google.com/maps/api/js?sensor=false"> 
+		</script>
+		<script type="text/javascript"> 
+		  	function initialize() { 
+		    	var latlng = new google.maps.LatLng(34.063509,-118.44541); 
+		    	var myOptions = { 
+		    		zoom: 14, // default is 8  
+		    		center: latlng, 
+		    		mapTypeId: google.maps.MapTypeId.ROADMAP 
+		    }; 
+		    var map = new google.maps.Map(document.getElementById("map_canvas"), 
+		        myOptions); 
+		  }
+		</script>
 	</head>
-	<body>
+	<body onload="initialize()">
 		<div class="container">
 			<%
 				if (!itemFound) {
@@ -171,11 +193,15 @@
 						}
 					%>
 				</ul>
-			</div>	
+			</div>
+
+			<div id="map_canvas" style="width:100%; height:500px"></div>
+
 			<%
 				}
 			%>
 		</div>
+
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<!-- Bootstrap -->
