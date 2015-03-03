@@ -14,3 +14,7 @@ div.suggestions div.current {
 	background-color: #3366cc;
 	color: white;
 }
+
+#next {
+	float: right;
+}

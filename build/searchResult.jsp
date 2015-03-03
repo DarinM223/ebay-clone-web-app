@@ -4,6 +4,7 @@
 	<head>
 		<title>Auction site search results</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
 	</head>
 	<body>
 		<div class="container">
@@ -11,9 +12,23 @@
 				
 				<h1>Search results:</h1>
 
+				<form action="search" method="GET">
+					<input type="text" name="q" id="q-input">
+					<input type="hidden" name="numResultsToSkip" value="0">
+					<input type="hidden" name="numResultsToReturn" value="20">
+					<input type="submit" value="Search!" class="btn btn-primary">
+				</form>
+
+				<%
+					String query = (String) request.getAttribute("q");
+					int numResultsToSkip = (Integer) request.getAttribute("numResultsToSkip");
+					int numResultsToReturn = (Integer) request.getAttribute("numResultsToReturn");
+					SearchResult[] results = (SearchResult[])request.getAttribute("results");
+				%>
+
 				<div class="list-group">
 					<%
-						SearchResult[] results = (SearchResult[])request.getAttribute("results");
+
 						for (int i = 0; i < results.length; i++) { 
 							SearchResult result = results[i];
 					%>
@@ -25,6 +40,24 @@
 						}
 					%>
 				</div>
+
+				<% 
+					if (numResultsToSkip - numResultsToReturn >= 0) {
+				%>
+					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip - numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary">Previous</a>
+				<%
+					}
+				%>
+
+				<% 
+					if (results.length > 0) {
+				%>
+					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip + numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary" id="next">Next</a>
+				<%
+					}
+				%>
+
+
 			</div>
 		</div>
 
