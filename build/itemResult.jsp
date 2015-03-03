@@ -140,8 +140,38 @@
 			<%
 				}
 			%>
-		</div>
-
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Seller Location</h3>
+  				</div>
+  				<ul class="list-group">
+					<li class="list-group-item">Location: <%= item.i_location %></li>
+					<li class="list-group-item">Country: <%= item.i_country%></li>
+					<%
+						if (item.i_latitude == "") {
+					%>
+						<li class="list-group-item">Latitude: N/A</li>
+					<%
+						} else {
+					%>
+						<li class="list-group-item">Latitude: <%= item.i_latitude%></li>
+					<%
+						}
+					%>
+					<%
+						if (item.i_longitude == "") {
+					%>
+						<li class="list-group-item">Longitude: N/A</li>
+					<%
+						} else {
+					%>
+						<li class="list-group-item">Longitude: <%= item.i_longitude%></li>
+					<%
+						}
+					%>
+				</ul>
+			</div>	
+		</div>	
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<!-- Bootstrap -->
