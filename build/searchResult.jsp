@@ -11,20 +11,31 @@
 				
 				<h1>Search results:</h1>
 
-				<div class="list-group">
-					<%
-						SearchResult[] results = (SearchResult[])request.getAttribute("results");
-						for (int i = 0; i < results.length; i++) { 
-							SearchResult result = results[i];
-					%>
-							<a href="item?id=<%= result.getItemId() %>" class="list-group-item">
-								<h4 class="list-group-item-heading">ID#: <%= result.getItemId() %></h4>
-								<p class="list-group-item-text"><%= result.getName() %></p>
-							</a>
-					<%
-						}
-					%>
-				</div>
+				<%
+					boolean isValid = (Boolean)request.getAttribute("isValid");
+					SearchResult[] results = (SearchResult[])request.getAttribute("results");
+					if (!isValid) {
+				%>
+					<h2>The search query is not valid</h2>
+				<%
+					} else {
+				%>
+					<div class="list-group">
+						<%
+							for (int i = 0; i < results.length; i++) { 
+								SearchResult result = results[i];
+						%>
+								<a href="item?id=<%= result.getItemId() %>" class="list-group-item">
+									<h4 class="list-group-item-heading">ID#: <%= result.getItemId() %></h4>
+									<p class="list-group-item-text"><%= result.getName() %></p>
+								</a>
+						<%
+							}
+						%>
+					</div>
+				<%
+					}
+				%>
 			</div>
 		</div>
 
