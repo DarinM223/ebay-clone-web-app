@@ -30,8 +30,17 @@
 		<script type="text/javascript"> 
 
 		  	function initialize() {
-		  		var latitude = "<%= item.i_latitude%>";
-		  		var longitude = "<%= item.i_longitude%>";
+		  		var latitude = 0;
+		  		var longitude = 0;
+		  		<%		  		
+			  		if (itemFound) {
+			  	%>
+			  			latitude = "<%= item.i_latitude%>";
+			  			longitude = "<%= item.i_longitude%>";
+			  	<%
+			  		}
+			  	%>
+
 		  		var latlong = null;
 
 		  		if (latitude != "" && longitude != "") {
@@ -77,11 +86,11 @@
 					<%
 						if (item.i_buy_price.isEmpty()) {
 					%>
-					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li>
+					<li class="list-group-item">Buy Price: N/A </li>
 					<%
 						} else {
 					%>
-					<li class="list-group-item">Buy Price: N/A</li>
+					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li
 					<%
 						}
 					%>
