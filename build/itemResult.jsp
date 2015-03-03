@@ -55,7 +55,29 @@
 		  			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 		  		}
 		  		else {
+		  			var geocoder = new google.maps.Geocoder();
+		  			var address = "";
+		  			<%		  		
+				  		if (itemFound) {
+				  	%>
+				  			address = "<%= item.i_location%>";
+				  	<%
+				  		}
+				  	%>
 
+				  	geocoder.geocode({'address':address}, function(results, status){
+				  		if (status == google.maps.GeocoderStatus.OK) {
+				  			latlong = results[0].geometry.location;
+
+				  			var myOptions = {
+				  				zoom: 8,
+				  				center: latlong,
+				  				mapTypeId: google.maps.MapTypeId.ROADMAP
+				  			};
+
+				  			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);				  			
+				  		}
+				  	});
 		  		}
 		  }
 		</script>
