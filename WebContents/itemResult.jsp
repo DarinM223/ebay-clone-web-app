@@ -112,7 +112,7 @@
 					<%
 						} else {
 					%>
-					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li
+					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li>
 					<%
 						}
 					%>
