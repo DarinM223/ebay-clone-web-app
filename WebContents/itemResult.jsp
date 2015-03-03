@@ -28,15 +28,26 @@
 			src="http://maps.google.com/maps/api/js?sensor=false"> 
 		</script>
 		<script type="text/javascript"> 
-		  	function initialize() { 
-		    	var latlng = new google.maps.LatLng(34.063509,-118.44541); 
-		    	var myOptions = { 
-		    		zoom: 14, // default is 8  
-		    		center: latlng, 
-		    		mapTypeId: google.maps.MapTypeId.ROADMAP 
-		    }; 
-		    var map = new google.maps.Map(document.getElementById("map_canvas"), 
-		        myOptions); 
+
+		  	function initialize() {
+		  		var latitude = "<%= item.i_latitude%>";
+		  		var longitude = "<%= item.i_longitude%>";
+		  		var latlong = null;
+
+		  		if (latitude != "" && longitude != "") {
+		  			latlong = new google.maps.LatLng(latitude, longitude);
+
+		  			var myOptions = {
+		  				zoom: 8,
+		  				center: latlong,
+		  				mapTypeId: google.maps.MapTypeId.ROADMAP
+		  			};
+
+		  			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		  		}
+		  		else {
+
+		  		}
 		  }
 		</script>
 	</head>
@@ -64,7 +75,7 @@
 					<li class="list-group-item">Starting Price: <%= item.i_first_bid %></li>
 					<li class="list-group-item">Current Price: <%= item.i_currently %></li>
 					<%
-						if (item.i_buy_price != "") {
+						if (item.i_buy_price.isEmpty()) {
 					%>
 					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li>
 					<%
@@ -130,7 +141,7 @@
 	  								<td><%= bidder.b_userID%></td>
 	  								<td><%= bidder.b_rating%></td>
 									<%
-										if (bidder.b_location == "") {
+										if (bidder.b_location.isEmpty()) {
 									%>
 										<td>N/A</td>
 									<%
@@ -141,7 +152,7 @@
 										}
 									%>
 									<%
-										if (bidder.b_country == "") {
+										if (bidder.b_country.isEmpty()) {
 									%>
 										<td>N/A</td>
 									<%
@@ -171,7 +182,7 @@
 					<li class="list-group-item">Location: <%= item.i_location %></li>
 					<li class="list-group-item">Country: <%= item.i_country%></li>
 					<%
-						if (item.i_latitude == "") {
+						if (item.i_latitude.isEmpty()) {
 					%>
 						<li class="list-group-item">Latitude: N/A</li>
 					<%
@@ -182,7 +193,7 @@
 						}
 					%>
 					<%
-						if (item.i_longitude == "") {
+						if (item.i_longitude.isEmpty()) {
 					%>
 						<li class="list-group-item">Longitude: N/A</li>
 					<%
