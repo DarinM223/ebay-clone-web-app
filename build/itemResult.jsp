@@ -1,8 +1,12 @@
 <!DOCTYPE html>
+<%@ page import="edu.ucla.cs.cs144.Bidder" %>
+<%@ page import="edu.ucla.cs.cs144.Bid" %>
 <%@ page import="edu.ucla.cs.cs144.Seller" %>
 <%@ page import="edu.ucla.cs.cs144.Item" %>
 <%@ page import="java.util.*" %>
 <%
+	Map<String, Bidder> bidders = (Map<String, Bidder>) request.getAttribute("bidders");
+	ArrayList<Bid> bids = (ArrayList<Bid>) request.getAttribute("bids");
 	Seller seller = (Seller) request.getAttribute("seller");
 	Item item = (Item) request.getAttribute("item");
 	ArrayList<String> categories = (ArrayList<String>) request.getAttribute("categories");
@@ -15,6 +19,13 @@
 	</head>
 	<body>
 		<div class="container">
+			<%
+				if (item == null) {
+			%>
+				<h3 class="panel-title">No Item Found</h3>
+			<%
+				} else {
+			%>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Item ID: <%= item.i_itemID %> </h3>
@@ -22,12 +33,22 @@
   				<ul class="list-group">
 					<li class="list-group-item">Item Name: <%= item.i_name %></li>
 					<li class="list-group-item">Description: <%= item.i_description %></li>
-					<li class="list-group-item">Seller ID: <%= seller.s_userID %></li>
-					<li class="list-group-item">Seller Rating: <%= seller.s_rating%></li>
 					<li class="list-group-item">Number of Bids: <%= item.i_number_of_bids %></li>
 					<li class="list-group-item">Starting Price: <%= item.i_first_bid %></li>
 					<li class="list-group-item">Current Price: <%= item.i_currently %></li>
+					<%
+						if (item.i_buy_price != "") {
+					%>
 					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li>
+					<%
+						} else {
+					%>
+					<li class="list-group-item">Buy Price: N/A</li>
+					<%
+						}
+					%>
+					<li class="list-group-item">Start Time: <%= item.i_started %></li>
+					<li class="list-group-item">End Time: <%= item.i_ends %></li>
 				</ul>
 			</div>
 			<div class="panel panel-default">
@@ -56,10 +77,19 @@
   						%>
   					</tbody>
   				</table>
-
 			</div>
-
-
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Bidders</h3>
+  				</div>
+  				<table class="table">
+  					<tbody>
+  					</tbody>
+  				</table>
+			</div>
+			<%
+				}
+			%>
 		</div>
 
 		<!-- jQuery -->
