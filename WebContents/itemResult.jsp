@@ -84,6 +84,20 @@
 	</head>
 	<body onload="initialize()">
 		<div class="container">
+			<h1>eBay clone item results</h1>
+
+			<form action="item" method="GET" class="form-horizontal">
+				<fieldset>
+					<legend>Enter another item id: </legend>
+					<div class="form-group">
+						<input type="text" name="id" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Submit" class="btn btn-primary">
+					</div>
+				</fieldset>
+			</form>
+
 			<%
 				if (!itemFound) {
 			%>
