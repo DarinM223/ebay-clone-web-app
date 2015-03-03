@@ -182,6 +182,10 @@ public class ItemServlet extends HttpServlet implements Servlet {
 
             Element item = doc.getDocumentElement();
 
+            boolean itemFound = true;
+            if (request.getParameter("id") == null)
+                itemFound = false;
+
             String itemID = item.getAttribute("ItemID");
             String name = escapeString(getElementTextByTagNameNR(item, "Name"));
             
@@ -266,6 +270,7 @@ public class ItemServlet extends HttpServlet implements Servlet {
             request.setAttribute("bids", bidList);
             request.setAttribute("item", item_obj);
             request.setAttribute("categories", categoryList);
+            request.setAttribute("itemFound", itemFound);
 
             //send to jsp page for display
             request.getRequestDispatcher("/itemResult.jsp").forward(request, response);

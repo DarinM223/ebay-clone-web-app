@@ -10,6 +10,7 @@
 	Seller seller = (Seller) request.getAttribute("seller");
 	Item item = (Item) request.getAttribute("item");
 	ArrayList<String> categories = (ArrayList<String>) request.getAttribute("categories");
+	boolean itemFound = (Boolean) request.getAttribute("itemFound");
 %>
 
 <html>
@@ -20,7 +21,7 @@
 	<body>
 		<div class="container">
 			<%
-				if (item == null) {
+				if (!itemFound) {
 			%>
 				<h3 class="panel-title">No Item Found</h3>
 			<%
@@ -78,15 +79,64 @@
   					</tbody>
   				</table>
 			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Bidders</h3>
-  				</div>
-  				<table class="table">
-  					<tbody>
-  					</tbody>
-  				</table>
-			</div>
+			<%
+				if (bids.size() != 0) {
+			%>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Bidders</h3>
+	  				</div>
+	  				<table class="table">
+	  					<tr>
+	  						<th>Bidder ID</th>
+	  						<th>Rating</th>
+	  						<th>Location</th>
+	  						<th>Country</th>
+	  						<th>Bid Amount</th>
+	  						<th>Time</th>
+	  					</tr>
+	  					<tbody>
+	  						<%
+	  							for (Bid bid : bids) {
+	  								Bidder bidder = bidders.get(bid.bd_userID);
+	  						%>
+	  							<tr>
+	  								<td><%= bidder.b_userID%></td>
+	  								<td><%= bidder.b_rating%></td>
+									<%
+										if (bidder.b_location == "") {
+									%>
+										<td>N/A</td>
+									<%
+										} else {
+									%>
+										<td><%= bidder.b_location%></td>
+									<%
+										}
+									%>
+									<%
+										if (bidder.b_country == "") {
+									%>
+										<td>N/A</td>
+									<%
+										} else {
+									%>
+										<td><%= bidder.b_country%></td>
+									<%
+										}
+									%>
+	  								<td><%= bid.bd_amount%></td>
+	  								<td><%= bid.bd_time%></td>
+	  							<tr>
+	  							<%
+	  								}
+	  							%>
+	  					</tbody>
+	  				</table>
+				</div>
+			<%
+				}
+			%>
 			<%
 				}
 			%>
