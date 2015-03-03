@@ -20,44 +20,50 @@
 				</form>
 
 				<%
-					String query = (String) request.getAttribute("q");
-					int numResultsToSkip = (Integer) request.getAttribute("numResultsToSkip");
-					int numResultsToReturn = (Integer) request.getAttribute("numResultsToReturn");
-					SearchResult[] results = (SearchResult[])request.getAttribute("results");
+					boolean isValid = (Boolean)request.getAttribute("isValid");
+					if (!isValid) {
 				%>
-
-				<div class="list-group">
-					<%
-
-						for (int i = 0; i < results.length; i++) { 
-							SearchResult result = results[i];
-					%>
-							<a href="item?id=<%= result.getItemId() %>" class="list-group-item">
-								<h4 class="list-group-item-heading">ID#: <%= result.getItemId() %></h4>
-								<p class="list-group-item-text"><%= result.getName() %></p>
-							</a>
-					<%
-						}
-					%>
-				</div>
-
-				<% 
-					if (numResultsToSkip - numResultsToReturn >= 0) {
+						<h2>The search query is not valid</h2>
+				<%
+					} else {
+						String query = (String) request.getAttribute("q");
+						int numResultsToSkip = (Integer) request.getAttribute("numResultsToSkip");
+						int numResultsToReturn = (Integer) request.getAttribute("numResultsToReturn");
+						SearchResult[] results = (SearchResult[])request.getAttribute("results");
 				%>
-					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip - numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary">Previous</a>
+						<div class="list-group">
+							<%
+
+								for (int i = 0; i < results.length; i++) { 
+									SearchResult result = results[i];
+							%>
+									<a href="item?id=<%= result.getItemId() %>" class="list-group-item">
+										<h4 class="list-group-item-heading">ID#: <%= result.getItemId() %></h4>
+										<p class="list-group-item-text"><%= result.getName() %></p>
+									</a>
+							<%
+								}
+							%>
+						</div>
+
+						<% 
+							if (numResultsToSkip - numResultsToReturn >= 0) {
+						%>
+							<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip - numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary">Previous</a>
+						<%
+							}
+						%>
+
+						<% 
+							if (results.length > 0) {
+						%>
+							<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip + numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary" id="next">Next</a>
+						<%
+							}
+						%>
 				<%
 					}
 				%>
-
-				<% 
-					if (results.length > 0) {
-				%>
-					<a href="search?q=<%= query %>&numResultsToSkip=<%= numResultsToSkip + numResultsToReturn %>&numResultsToReturn=<%= numResultsToReturn %>" class="btn btn-primary" id="next">Next</a>
-				<%
-					}
-				%>
-
-
 			</div>
 		</div>
 

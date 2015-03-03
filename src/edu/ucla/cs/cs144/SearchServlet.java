@@ -14,16 +14,31 @@ public class SearchServlet extends HttpServlet implements Servlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         // your codes here
-        String query = request.getParameter("q");
-        int numResultsToSkip = Integer.parseInt(request.getParameter("numResultsToSkip"));
-        int numResultsToReturn = Integer.parseInt(request.getParameter("numResultsToReturn"));
+        String q = request.getParameter("q");
+        String skip = request.getParameter("numResultsToSkip");
+        String numReturn = request.getParameter("numResultsToReturn");
 
-        SearchResult[] results = AuctionSearchClient.basicSearch(query, numResultsToSkip, numResultsToReturn);
+        boolean isValid = true;
 
-        request.setAttribute("results", results);
-        request.setAttribute("q", query);
-        request.setAttribute("numResultsToSkip", numResultsToSkip);
-        request.setAttribute("numResultsToReturn", numResultsToReturn);
-        request.getRequestDispatcher("/searchResult.jsp").forward(request, response);
+        int numResultsToSkip = -1;
+        int numResultsToReturn = -1;
+
+        try {
+            numResultsToSkip = Integer.parseInt(skip);
+            numResultsToReturn = Integer.parseInt(numReturn);
+        } catch (Exception e) {
+            isValid = false;
+        } finally {
+            SearchResult[] results = null;
+            if (isValid) {
+                results = AuctionSearchClient.basicSearch(q, numResultsToSkip, numResultsToReturn);
+                request.setAttribute("results", results);
+                request.setAttribute("q", q);
+                request.setAttribute("numResultsToSkip", numResultsToSkip);
+                request.setAttribute("numResultsToReturn", numResultsToReturn);
+            }
+            request.setAttribute("isValid", isValid);
+            request.getRequestDispatcher("/searchResult.jsp").forward(request, response);
+        }
     }
 }
