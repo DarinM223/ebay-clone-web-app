@@ -19,7 +19,7 @@ function DropdownControl(textbox, getData) {
     this.layer = document.createElement('div');
     this.layer.className = 'suggestions';
     this.layer.style.visibility = 'hidden';
-    this.layer.style.width = this.textbox.offsetWidth;
+    this.layer.style.width = this.textbox.offsetWidth + 'px';
     this.textbox.parentNode.appendChild(this.layer);
   };
 
@@ -61,6 +61,9 @@ function DropdownControl(textbox, getData) {
         case 13: // enter key
           that.completeTextFromHighlight();
           break;
+        case 27:
+          that.toggleDropdown(false);
+          break;
         case 38: // up key
           that.moveHighlight(-1);
           break;
@@ -71,7 +74,7 @@ function DropdownControl(textbox, getData) {
     };
 
     this.textbox.onkeyup = function(e) {
-      if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13) {
+      if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13 && e.keyCode !== 27) {
         if (that.textbox.value.length === 0 || !that.textbox.value.trim()) {
           that.toggleDropdown(false);
         } else {
