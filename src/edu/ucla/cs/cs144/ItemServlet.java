@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.StringReader;
 import org.xml.sax.InputSource;
+
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
@@ -280,6 +282,11 @@ public class ItemServlet extends HttpServlet implements Servlet {
             request.setAttribute("item", item_obj);
             request.setAttribute("categories", categoryList);
             request.setAttribute("itemFound", true);
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("ItemID", item_obj.i_itemID);
+            session.setAttribute("Name", item_obj.i_name);
+            session.setAttribute("BuyPrice", item_obj.i_buy_price);
 
             //send to jsp page for display
             request.getRequestDispatcher("/itemResult.jsp").forward(request, response);
