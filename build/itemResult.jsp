@@ -126,7 +126,17 @@
 					<%
 						} else {
 					%>
-					<li class="list-group-item">Buy Price: <%= item.i_buy_price %></li>
+					<li class="list-group-item">
+
+						Buy Price: <%= item.i_buy_price %>
+
+						<form action="/eBay/checkout" method="GET">
+							<input type="hidden" name="id" value="<%= item.i_itemID %>"/>
+							<input type="submit" value="Pay now"/>
+						</form>
+
+					</li>
+
 					<%
 						}
 					%>

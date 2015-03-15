@@ -20,6 +20,7 @@ public class PurchaseServlet extends HttpServlet implements Servlet {
         String itemID = (String)session.getAttribute("ItemID");
         String name = (String)session.getAttribute("Name");
         String buyPrice = (String)session.getAttribute("BuyPrice");
+        String secureLink = "https://" + req.getServerName() + ":8443" + req.getContextPath();
 
         // if parameters are not valid, go to fail checkout page
         if (itemID == null || itemID.trim().isEmpty() || name == null || name.trim().isEmpty() || buyPrice == null || buyPrice.trim().isEmpty()) {
@@ -31,6 +32,7 @@ public class PurchaseServlet extends HttpServlet implements Servlet {
         req.setAttribute("ItemID", itemID);
         req.setAttribute("Name", name);
         req.setAttribute("BuyPrice", buyPrice);
+        req.setAttribute("SecureLink", secureLink);
         req.getRequestDispatcher("/success_checkout.jsp").forward(req, resp);
     }
 }
