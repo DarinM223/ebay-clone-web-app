@@ -24,6 +24,7 @@ public class PurchaseConfirmationServlet extends HttpServlet implements Servlet 
         String name = (String)session.getAttribute("Name");
         String buyPrice = (String)session.getAttribute("BuyPrice");
         String creditCard = req.getParameter("CreditCard");
+        String unsecureLink = "http://" + req.getServerName() + ":1448" + req.getContextPath();
 
         req.setAttribute("ItemID", itemID);
         req.setAttribute("Name", name);
@@ -44,6 +45,7 @@ public class PurchaseConfirmationServlet extends HttpServlet implements Servlet 
         Date d = new Date();
         String currTime = format.format(d);
         req.setAttribute("CurrTime", currTime);
+        req.setAttribute("UnsecureLink", unsecureLink);
 
         req.getRequestDispatcher("/success_confirm.jsp").forward(req, resp);
     }
