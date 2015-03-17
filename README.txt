@@ -8,4 +8,8 @@ UID: 704161137
 
 ---------------------------------------------------------------------------------------
 
-Debugging .jsp pages was challenging, though it was incredibly satisfying to see our webpage come together piece by piece.
+Q1:
+(4) -> (5) and (5) -> (6)
+
+Q2:
+ItemID, ItemName, and BuyPrice are all set at the item page within an http sesion. Once this is done, BuyPrice is associated with the item through the session, which guarantees that the item's BuyPrice is correct.
