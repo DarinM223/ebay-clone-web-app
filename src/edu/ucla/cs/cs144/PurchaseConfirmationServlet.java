@@ -23,7 +23,7 @@ public class PurchaseConfirmationServlet extends HttpServlet implements Servlet 
         String itemID = (String)session.getAttribute("ItemID");
         String name = (String)session.getAttribute("Name");
         String buyPrice = (String)session.getAttribute("BuyPrice");
-        String creditCard = (String)session.getAttribute("CreditCard");
+        String creditCard = req.getParameter("CreditCard");
 
         req.setAttribute("ItemID", itemID);
         req.setAttribute("Name", name);
@@ -34,8 +34,9 @@ public class PurchaseConfirmationServlet extends HttpServlet implements Servlet 
         if (itemID == null || itemID.trim().isEmpty() || name == null || name.trim().isEmpty() || buyPrice == null || buyPrice.trim().isEmpty()) {
             req.getRequestDispatcher("/fail_checkout.jsp").forward(req, resp);
             return;
-        } else if (creditCard == null || creditCard.trim().isEmpty()) { // if credit card is not valid, go to fail confirmation page
+        } else if (creditCard == null || creditCard.isEmpty()) { // if credit card is not valid, go to fail confirmation page
             req.getRequestDispatcher("/fail_confirm.jsp").forward(req, resp);
+            return;
         }
 
         // Get current time

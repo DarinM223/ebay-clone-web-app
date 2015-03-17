@@ -11,7 +11,7 @@
     <h3>Buy price: <%= request.getAttribute("BuyPrice") %></h3>
     <form action="<%= request.getAttribute("SecureLink") %>/confirm" method="POST">
     	<label for="CreditCard">Credit card #: </label>
-    	<input type="text" id="CreditCard" name="CreditCard">
+    	<input type="text" name="CreditCard" value="">
     	<input type="submit" value="submit">
     </form>
 </body>
