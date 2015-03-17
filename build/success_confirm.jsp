@@ -14,7 +14,6 @@
     <h3>Credit Card: <%= request.getAttribute("CreditCard") %></h3><br/>
     <h3>Time: <%= request.getAttribute("CurrTime") %></h3><br/>
 
-    <a href="<%= request.getAttribute("UnsecureLink") %>">Home</a>
     <a href="<%= request.getAttribute("UnsecureLink") %>/keywordSearch.html">Search</a>
     <a href="<%= request.getAttribute("UnsecureLink") %>/getItem.html">Find item by id</a>
 
